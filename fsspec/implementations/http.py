@@ -44,6 +44,7 @@ class HTTPFileSystem(AsyncFileSystem):
     """
 
     sep = "/"
+    protocol = ("http", "https")
 
     def __init__(
         self,
