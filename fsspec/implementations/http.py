@@ -428,7 +428,7 @@ class HTTPFileSystem(AsyncFileSystem):
                         **kwargs,
                     )
                 )
-                if info.get("size") is not None:
+                if info.get("size", 0) > 0:
                     break
             except Exception as exc:
                 if policy == "get":
@@ -819,7 +819,7 @@ async def _file_info(url, session, size_policy="head", **kwargs):
     Default operation is to explicitly allow redirects and use encoding
     'identity' (no compression) to get the true size of the target.
     """
-    logger.debug("Retrieve file size for %s", url)
+    logger.debug("Retrieve file size via %s for %s", size_policy, url)
     kwargs = kwargs.copy()
     ar = kwargs.pop("allow_redirects", True)
     head = kwargs.get("headers", {}).copy()
